@@ -31,7 +31,15 @@ func convertJSONtoAndroidXML(formPath, outPath string) error {
 	formObjects := make([]map[string]string, 0)
 	json.Unmarshal(rawJSON, &formObjects)
 
-	var xmlStr string
+	xmlStr := `<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        tools:context=".FormsActivity">`
+
 	var stringsXML string
 	for _, obj := range formObjects {
 		if slices.Index(strings.Split(obj["attributes"], ";"), "hidden") != -1 {
@@ -141,6 +149,7 @@ func convertJSONtoAndroidXML(formPath, outPath string) error {
 
 		}
 		xmlStr += "\n"
+		xmlStr += "</LinearLayout>"
 
 		// write xml to outPath
 		xmlFileName := strings.ReplaceAll(filepath.Base(formPath), ".f8p", ".xml")
