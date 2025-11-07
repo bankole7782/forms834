@@ -38,7 +38,8 @@ func convertJSONtoAndroidXML(formPath, outPath string) error {
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        tools:context=".FormsActivity">`
+        tools:context=".FormsActivity">
+				`
 
 	var stringsXML string
 	for _, obj := range formObjects {
@@ -148,18 +149,19 @@ func convertJSONtoAndroidXML(formPath, outPath string) error {
         android:text="Check the box" />`, obj["name"])
 
 		}
-		xmlStr += "\n"
-		xmlStr += "</LinearLayout>"
-
-		// write xml to outPath
-		xmlFileName := strings.ReplaceAll(filepath.Base(formPath), ".f8p", ".xml")
-		xmlOutPath := filepath.Join(outPath, xmlFileName)
-		os.WriteFile(xmlOutPath, []byte(xmlStr), 0777)
-
-		// append to strings xml
-		xmlOutPath2 := filepath.Join(outPath, "append_strings.xml")
-		os.WriteFile(xmlOutPath2, []byte(stringsXML), 0777)
-
 	}
+
+	xmlStr += "\n"
+	xmlStr += "</LinearLayout>"
+
+	// write xml to outPath
+	xmlFileName := strings.ReplaceAll(filepath.Base(formPath), ".f8p", ".xml")
+	xmlOutPath := filepath.Join(outPath, xmlFileName)
+	os.WriteFile(xmlOutPath, []byte(xmlStr), 0777)
+
+	// append to strings xml
+	xmlOutPath2 := filepath.Join(outPath, "append_strings.xml")
+	os.WriteFile(xmlOutPath2, []byte(stringsXML), 0777)
+
 	return nil
 }
